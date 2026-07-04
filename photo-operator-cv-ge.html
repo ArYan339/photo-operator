@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ram Bachan Mahato — Photo Operator Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --sidebar-bg: #1a1e24;
+      --sidebar-text: #e2e8f0;
+      --sidebar-muted: #94a3b8;
+      --accent: #e0a96d;
+      --accent-hover: #cca05a;
+      --main-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #475569;
+      --border: #f1f5f9;
+      --highlight: #fef3c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: #f1f5f9;
+      padding: 25px 10px;
+      color: var(--text);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .download-bar {
+      max-width: 800px;
+      margin: 0 auto 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .download-bar span {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .download-bar button {
+      background: #0f172a;
+      color: #fff;
+      border: none;
+      padding: 9px 20px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .download-bar button:hover { background: #1e293b; }
+    .download-bar button:disabled { opacity: 0.6; cursor: wait; }
+
+    /* A4 single-page layout */
+    .resume {
+      width: 800px;
+      height: 1130px;
+      margin: 0 auto;
+      background: var(--main-bg);
+      display: grid;
+      grid-template-columns: 245px 1fr;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-wrap {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 18px;
+      border: 3px solid var(--accent);
+      background: #2a303c;
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .sidebar h2 {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--accent);
+      margin: 16px 0 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(224, 169, 109, 0.25);
+    }
+
+    .sidebar h2:first-of-type { margin-top: 0; }
+
+    .contact {
+      list-style: none;
+    }
+
+    .contact li {
+      font-size: 9.5px;
+      line-height: 1.5;
+      color: var(--sidebar-muted);
+      margin-bottom: 8px;
+      word-break: break-word;
+    }
+
+    .contact li strong {
+      display: block;
+      color: var(--sidebar-text);
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 1px;
+    }
+
+    .skill-item {
+      font-size: 9.5px;
+      color: var(--sidebar-muted);
+      margin-bottom: 5px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .skill-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .lang-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      margin-bottom: 4px;
+      color: var(--sidebar-muted);
+    }
+
+    .lang-row span:last-child {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .sidebar-tools {
+      list-style: none;
+      font-size: 9.5px;
+      color: var(--sidebar-muted);
+    }
+
+    .sidebar-tools li {
+      margin-bottom: 4px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .sidebar-tools li::before {
+      content: '\00B7';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 28px 32px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header-area {
+      margin-bottom: 12px;
+    }
+
+    .name {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+    }
+
+    .role {
+      font-size: 11px;
+      font-weight: 700;
+      color: #b45309;
+      margin-top: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .accent-line {
+      height: 3px;
+      width: 60px;
+      background: var(--accent);
+      margin: 12px 0 16px;
+      border-radius: 1.5px;
+    }
+
+    .section { margin-bottom: 12px; }
+
+    .section h3 {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #0f172a;
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section p {
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .highlight-box {
+      background: #fffbeb;
+      border-left: 3.5px solid #d97706;
+      padding: 10px 12px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: #78350f;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .item { margin-bottom: 10px; }
+    .item:last-child { margin-bottom: 0; }
+
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .item-head .title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .item-head .date {
+      font-size: 9px;
+      color: #b45309;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .item .sub {
+      font-size: 9.5px;
+      color: #64748b;
+      font-style: italic;
+      margin: 2px 0 4px;
+    }
+
+    ul.bullets {
+      padding-left: 14px;
+      margin: 0;
+    }
+
+    ul.bullets li {
+      font-size: 9.5px;
+      line-height: 1.45;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .two-col .section { margin-bottom: 0; }
+
+    .note {
+      font-size: 9px;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+
+    .ref-line {
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    .ref-line strong { color: #0f172a; }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        background: #fff;
+        padding: 0;
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .download-bar { display: none !important; }
+
+      .resume {
+        width: 210mm;
+        height: 297mm;
+        box-shadow: none;
+        margin: 0;
+        border-radius: 0;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+
+      .sidebar, .main {
+        page-break-inside: avoid;
+      }
+
+      .section { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="download-bar">
+    <span>Digital Photo Centers Network · Photo Operator Position</span>
+    <button id="downloadBtn" onclick="downloadPDF()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download Resume (PDF)
+    </button>
+  </div>
+
+  <div class="resume" id="resume">
+    <aside class="sidebar">
+      <div class="photo-wrap">
+        <img src="photo1.jpeg" alt="Ram Bachan Mahato" onerror="this.src='photo.png'" />
+      </div>
+
+      <h2>Contact</h2>
+      <ul class="contact">
+        <li><strong>Phone</strong>+995 568 829 359</li>
+        <li><strong>Email</strong>rmahato5@seu.edu.ge</li>
+        <li><strong>Alt. Email</strong>Kushwahaajayr5@gmail.com</li>
+        <li><strong>Address</strong>Old Tbilisi, Georgia</li>
+        <li><strong>LinkedIn</strong>linkedin.com/in/ram-bachan-687034407</li>
+        <li><strong>GitHub</strong>github.com/ArAryan339</li>
+      </ul>
+
+      <h2>Key Skills</h2>
+      <div class="skill-item">Adobe Photoshop CC</div>
+      <div class="skill-item">Professional Color Correction</div>
+      <div class="skill-item">Photo Cropping &amp; Resizing</div>
+      <div class="skill-item">Document Photography</div>
+      <div class="skill-item">Background Removal / Replacement</div>
+      <div class="skill-item">Studio Lighting Management</div>
+      <div class="skill-item">Photo Printing Processes</div>
+      <div class="skill-item">Client Relations</div>
+
+      <h2>Languages</h2>
+      <div class="lang-row"><span>English</span><span>Fluent</span></div>
+      <div class="lang-row"><span>Georgian</span><span>Beginner</span></div>
+      <div class="lang-row"><span>Nepali</span><span>Native</span></div>
+      <div class="lang-row"><span>Hindi</span><span>Conversational</span></div>
+
+      <h2>Technical Tools</h2>
+      <ul class="sidebar-tools">
+        <li>Adobe Photoshop CC</li>
+        <li>Lightroom Classic</li>
+        <li>Camera Raw</li>
+        <li>Epson / Canon Printers</li>
+        <li>Studio Lighting &amp; Diffusers</li>
+        <li>DSLR / Mirrorless Cameras</li>
+        <li>Windows / macOS / iPadOS</li>
+      </ul>
+
+      <h2>Personal Traits</h2>
+      <div class="skill-item">Detail-Oriented</div>
+      <div class="skill-item">Quick Learner of New Technologies</div>
+      <div class="skill-item">Polite &amp; Client-Focused</div>
+      <div class="skill-item">Punctual &amp; Responsible</div>
+    </aside>
+
+    <main class="main">
+      <div class="header-area">
+        <div class="name">Ram Bachan Mahato</div>
+        <div class="role">Photo Operator / Editor</div>
+        <div class="accent-line"></div>
+
+        <section class="section" style="margin-bottom: 8px;">
+          <h3>Professional Profile</h3>
+          <p>
+            A detail-oriented and creative student with strong technical knowledge of digital image processing, color models, and Adobe Photoshop. I am eager to bring my experience in photo editing, color correction, cropping, and background removal to <strong>Digital Photo Centers Network</strong>. Through my studies in Data Science &amp; AI, I have gained deep theoretical and practical understanding of pixel manipulation, contrast adjustment, and dimensional standards. Combined with my client-facing experience, I am fully prepared to take, process, print document photos and deliver the best service to customers.
+          </p>
+        </section>
+      </div>
+
+      <section class="section">
+        <h3>Why I'm a Suitable Candidate</h3>
+        <div class="highlight-box">
+          <ul style="padding-left: 12px;">
+            <li style="margin-bottom: 4px;"><strong>Complete Photoshop Proficiency:</strong> Precise background removal, layer mask usage, spot healing, and professional color grading.</li>
+            <li style="margin-bottom: 4px;"><strong>Customer Service Experience:</strong> Call center experience with polite, friendly communication skills focused on customer satisfaction.</li>
+            <li style="margin-bottom: 4px;"><strong>Fast Learning &amp; Adaptation:</strong> Ready to quickly learn the center's specific equipment, cameras, and printing processes. Available to work full-time.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Skills &amp; Practical Experience</h3>
+        <p class="note">Independent and academic practice in digital design and photo processing.</p>
+
+        <div class="item">
+          <div class="item-head">
+            <span class="title">Freelance &amp; Digital Photo Processing</span>
+            <span class="date">2025 — Present</span>
+          </div>
+          <div class="sub">Personal Studio Work &amp; Projects</div>
+          <ul class="bullets">
+            <li><strong>Background Removal:</strong> Professional removal and replacement of backgrounds on hundreds of photos (using Pen Tool, channels, and masks) for documents and catalogs.</li>
+            <li><strong>Color Correction &amp; Retouching:</strong> White balance, exposure, and noise adjustment; skin defect removal; photo restoration in RGB and CMYK standards.</li>
+            <li><strong>Cropping &amp; Resizing:</strong> Precise portrait cropping for passport, visa, and ID card standards of various countries, maintaining correct head-to-background proportions.</li>
+            <li><strong>Equipment Proficiency:</strong> Practical experience with DSLR/Mirrorless cameras, managing aperture, shutter speed, and studio lighting for optimal portraits.</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="two-col">
+        <section class="section">
+          <h3>Education</h3>
+          <div class="item" style="margin-bottom: 0;">
+            <div class="item-head">
+              <span class="title">Bachelor's, Data Science &amp; AI</span>
+              <span class="date">2026 — Present</span>
+            </div>
+            <div class="sub">National University of Georgia (SEU), Tbilisi</div>
+            <ul class="bullets">
+              <li>Covers image processing, color models, and computer design.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>Contribution to the Center</h3>
+          <ul class="bullets" style="margin-top: 4px;">
+            <li>Efficient printing equipment management</li>
+            <li>Clean and precise background removal</li>
+            <li>Perfect portrait color balance</li>
+            <li>Polite, fast, and friendly service</li>
+            <li>Full adherence to work schedule</li>
+          </ul>
+        </section>
+      </div>
+
+      <section class="section" style="margin-top: 6px; margin-bottom: 0;">
+        <h3>References</h3>
+        <p class="ref-line">
+          <strong>Academic Reference:</strong> Mr. David Kapanadze, SEU Lecturer — d.kapanadze@seu.edu.ge
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      const btn = document.getElementById('downloadBtn');
+      const origHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = 'Generating PDF...';
+
+      const element = document.getElementById('resume');
+      const img = element.querySelector('.photo-wrap img');
+
+      const generate = () => {
+        const opt = {
+          margin:       0,
+          filename:     'Ram_Bachan_Mahato_Photo_Operator_CV.pdf',
+          image:        { type: 'jpeg', quality: 0.95 },
+          html2canvas:  { scale: 3, useCORS: true, allowTaint: false, logging: false },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(function() {
+          btn.disabled = false;
+          btn.innerHTML = origHTML;
+        }).catch(function(err) {
+          console.error('PDF generation failed:', err);
+          fallbackPrint();
+        });
+      };
+
+      const fallbackPrint = function() {
+        document.title = 'Ram_Bachan_Mahato_Photo_Operator_CV';
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
+        window.print();
+      };
+
+      if (typeof html2pdf === 'undefined') {
+        fallbackPrint();
+        return;
+      }
+
+      if (img && !img.complete) {
+        img.addEventListener('load', generate, { once: true });
+        img.addEventListener('error', generate, { once: true });
+      } else {
+        generate();
+      }
+    }
+  </script>
+</body>
+</html>

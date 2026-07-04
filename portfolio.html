@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ram Bachan Mahato — Photo Operator &amp; Editor</title>
+  <meta name="description" content="Photo Operator & Digital Editor — portfolio of Ram Bachan Mahato. Specializing in photo editing, color correction, background removal, and document photography." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+      --text: #f0ece4;
+      --text-muted: #7a7580;
+      --accent: #e0a96d;
+      --accent-soft: rgba(224,169,109,0.12);
+      --accent-glow: rgba(224,169,109,0.25);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --font: 'Inter', system-ui, sans-serif;
+      --serif: 'Playfair Display', Georgia, serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── AMBIENT ── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.3;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+
+    .orb-1 { width: 500px; height: 500px; background: #e0a96d; top: -150px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #b45309; bottom: 20%; right: -150px; animation-delay: -7s; }
+    .orb-3 { width: 300px; height: 300px; background: #92400e; top: 50%; left: 40%; animation-delay: -14s; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -50px) scale(1.08); }
+      66% { transform: translate(-30px, 30px) scale(0.92); }
+    }
+
+    .grid-lines {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black, transparent);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(10, 10, 15, 0.7);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    nav.scrolled { padding: 14px 40px; background: rgba(10, 10, 15, 0.92); }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--bg) !important;
+      background: var(--accent);
+      padding: 8px 20px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-cta:hover { background: #cca05a; transform: translateY(-1px); }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(224,169,109,0.2);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .btn-primary:hover { background: #cca05a; transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border-hover);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-photo {
+      position: relative;
+      width: 340px;
+      height: 420px;
+    }
+
+    .hero-photo-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      position: relative;
+    }
+
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(20%);
+      transition: filter 0.5s;
+    }
+
+    .hero-photo-frame:hover img { filter: grayscale(0%); }
+
+    .hero-photo-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -1px;
+    }
+
+    .stat-item .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .skill-card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+    .skill-card:hover::before { opacity: 1; }
+
+    .skill-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .skill-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .skill-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.35s;
+      cursor: pointer;
+    }
+
+    .gallery-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+
+    .gallery-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(30%);
+      transition: filter 0.4s;
+    }
+
+    .gallery-card:hover img { filter: grayscale(0%); }
+
+    .gallery-card .card-body {
+      padding: 20px 22px;
+    }
+
+    .gallery-card .card-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .gallery-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .gallery-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── EXPERIENCE / RESUME ── */
+    .resume-embed {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .resume-header {
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resume-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .resume-header a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .resume-header a:hover { gap: 10px; }
+
+    .resume-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .resume-left {
+      padding: 28px;
+      border-right: 1px solid var(--border);
+    }
+
+    .resume-right {
+      padding: 28px;
+    }
+
+    .resume-section {
+      margin-bottom: 24px;
+    }
+
+    .resume-section:last-child { margin-bottom: 0; }
+
+    .resume-section h4 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .resume-item {
+      margin-bottom: 16px;
+    }
+
+    .resume-item:last-child { margin-bottom: 0; }
+
+    .resume-item .item-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .resume-item .item-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .resume-item .item-date {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .resume-item ul {
+      padding-left: 16px;
+      margin-top: 6px;
+    }
+
+    .resume-item ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 3px;
+    }
+
+    .resume-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .resume-skill-tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(224,169,109,0.15);
+    }
+
+    .lang-list {
+      list-style: none;
+    }
+
+    .lang-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lang-list li:last-child { border-bottom: none; }
+
+    .lang-list .level {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .contact-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .contact-card .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      font-size: 18px;
+    }
+
+    .contact-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .contact-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .hero h1 { font-size: 40px; }
+      .hero-sub { margin-left: auto; margin-right: auto; }
+      .hero-actions { justify-content: center; }
+      .hero-photo { margin: 0 auto; width: 280px; height: 340px; }
+      .hero-stats { justify-content: center; }
+      .section-title { font-size: 30px; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .resume-body { grid-template-columns: 1fr; }
+      .resume-left { border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-direction: column; gap: 16px; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="grid-lines"></div>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Ram<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge"><span class="dot"></span> Available for hire</div>
+          <h1>Ram Bachan<br><em>Mahato</em></h1>
+          <p class="hero-sub">Photo Operator &amp; Digital Editor specializing in photo editing, color correction, background removal, and document photography. Delivering pixel-perfect results with a keen eye for detail.</p>
+          <div class="hero-actions">
+            <a href="#resume" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              View Resume
+            </a>
+            <a href="#contact" class="btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Get in Touch
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num">3+</div>
+              <div class="stat-label">Tools Mastered</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">500+</div>
+              <div class="stat-label">Photos Processed</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">95%</div>
+              <div class="stat-label">Client Satisfaction</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="hero-photo-frame">
+            <img src="photo1.jpeg" alt="Ram Bachan Mahato" onerror="this.src='photo.png'" />
+          </div>
+          <div class="hero-photo-badge">Photo Operator</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">About Me</div>
+      <div class="section-title">Crafting Visual<br>Stories with Precision</div>
+      <p class="section-desc">A detail-oriented and creative student with strong technical knowledge of digital image processing, color models, and Adobe Photoshop. I bring pixel-perfect editing, professional color correction, and seamless background removal to every project.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SKILLS ═══ -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label">Expertise</div>
+      <div class="section-title">Skills &amp; Tools</div>
+      <p class="section-desc">From studio lighting to pixel-level retouching — I have the technical and creative skills to deliver exceptional photo operations.</p>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3>Color Correction</h3>
+          <p>White balance, exposure, noise reduction, and professional color grading in RGB and CMYK.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">✂️</div>
+          <h3>Background Removal</h3>
+          <p>Precise background removal and replacement using Pen Tool, channels, and layer masks.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">📷</div>
+          <h3>Document Photography</h3>
+          <p>Passport, visa, and ID photos meeting exact dimensional standards.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">💡</div>
+          <h3>Studio Lighting</h3>
+          <p>Managing aperture, shutter speed, and studio lighting for optimal portraits.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🖨️</div>
+          <h3>Photo Printing</h3>
+          <p>Full printing workflow from digital file to physical output with quality control.</p>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🤝</div>
+          <h3>Client Relations</h3>
+          <p>Polite, fast, and friendly service with a focus on customer satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GALLERY ═══ -->
+  <section id="gallery">
+    <div class="container">
+      <div class="section-label">Portfolio</div>
+      <div class="section-title">Selected Work</div>
+      <p class="section-desc">A showcase of my photo editing, retouching, and digital processing work.</p>
+      <div class="gallery-grid">
+        <div class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=400&fit=crop" alt="Portrait Photography" />
+          <div class="card-body">
+            <div class="card-tag">Photography</div>
+            <h3>Studio Portrait</h3>
+            <p>Professional portrait with studio lighting setup and post-processing.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop" alt="Photo Editing" />
+          <div class="card-body">
+            <div class="card-tag">Editing</div>
+            <h3>Color Grading</h3>
+            <p>Advanced color correction and retouching for professional headshots.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=400&fit=crop" alt="Document Processing" />
+          <div class="card-body">
+            <div class="card-tag">Processing</div>
+            <h3>Document Photos</h3>
+            <p>Precise cropping and sizing for passport, visa, and ID standards.</p>
+          </div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=600&h=400&fit=crop" alt="Background Removal" />
+          <div class="card-body">
+            <div class="card-tag">Retouching</div>
+            <h3>Background Removal</h3>
+            <p>Seamless background removal and replacement for clean document photos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RESUME ═══ -->
+  <section id="resume">
+    <div class="container">
+      <div class="section-label">Experience</div>
+      <div class="section-title">Resume</div>
+      <p class="section-desc">My professional background, education, and the skills I bring to every project.</p>
+
+      <div class="resume-embed">
+        <div class="resume-header">
+          <h3>Full Resume</h3>
+          <a href="photo-operator-cv-ge.html" target="_blank">Open Full Resume <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+        </div>
+        <div class="resume-body">
+          <div class="resume-left">
+            <div class="resume-section">
+              <h4>Professional Profile</h4>
+              <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">A detail-oriented and creative student with strong technical knowledge of digital image processing, color models, and Adobe Photoshop. Eager to bring experience in photo editing, color correction, cropping, and background removal to a professional team.</p>
+            </div>
+
+            <div class="resume-section">
+              <h4>Skills</h4>
+              <div class="resume-skills">
+                <span class="resume-skill-tag">Adobe Photoshop CC</span>
+                <span class="resume-skill-tag">Color Correction</span>
+                <span class="resume-skill-tag">Background Removal</span>
+                <span class="resume-skill-tag">Photo Cropping</span>
+                <span class="resume-skill-tag">Studio Lighting</span>
+                <span class="resume-skill-tag">Lightroom Classic</span>
+                <span class="resume-skill-tag">Camera Raw</span>
+                <span class="resume-skill-tag">DSLR / Mirrorless</span>
+              </div>
+            </div>
+
+            <div class="resume-section">
+              <h4>Languages</h4>
+              <ul class="lang-list">
+                <li><span>English</span><span class="level">Fluent</span></li>
+                <li><span>Georgian</span><span class="level">Beginner</span></li>
+                <li><span>Nepali</span><span class="level">Native</span></li>
+                <li><span>Hindi</span><span class="level">Conversational</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="resume-right">
+            <div class="resume-section">
+              <h4>Experience</h4>
+              <div class="resume-item">
+                <div class="item-title">Freelance &amp; Digital Photo Processing</div>
+                <div class="item-date">2025 — Present</div>
+                <div class="item-sub">Personal Studio Work &amp; Projects</div>
+                <ul>
+                  <li>Background removal on hundreds of photos using Pen Tool, channels, and masks</li>
+                  <li>Color correction, white balance, exposure, and noise adjustment</li>
+                  <li>Precise portrait cropping for passport, visa, and ID standards</li>
+                  <li>DSLR/Mirrorless camera operation and studio lighting management</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="resume-section">
+              <h4>Education</h4>
+              <div class="resume-item">
+                <div class="item-title">Bachelor's, Data Science &amp; AI</div>
+                <div class="item-date">2026 — Present</div>
+                <div class="item-sub">National University of Georgia (SEU), Tbilisi</div>
+                <ul>
+                  <li>Covers image processing, color models, and computer design</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="resume-section">
+              <h4>References</h4>
+              <div class="resume-item">
+                <div class="item-title">Mr. David Kapanadze</div>
+                <div class="item-sub">SEU Lecturer — d.kapanadze@seu.edu.ge</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-label">Contact</div>
+      <div class="section-title">Let's Work Together</div>
+      <p class="section-desc">Ready to bring your photo projects to life? Get in touch and let's create something beautiful.</p>
+      <div class="contact-grid">
+        <a href="tel:+995568829359" class="contact-card">
+          <div class="icon">📞</div>
+          <h4>Phone</h4>
+          <p>+995 568 829 359</p>
+        </a>
+        <a href="mailto:rmahato5@seu.edu.ge" class="contact-card">
+          <div class="icon">✉️</div>
+          <h4>Email</h4>
+          <p>rmahato5@seu.edu.ge</p>
+        </a>
+        <a href="https://linkedin.com/in/ram-bachan-687034407" target="_blank" class="contact-card">
+          <div class="icon">💼</div>
+          <h4>LinkedIn</h4>
+          <p>linkedin.com/in/ram-bachan</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Ram Bachan Mahato. Crafted with precision.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Smooth reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.skill-card, .gallery-card, .contact-card, .resume-embed').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
